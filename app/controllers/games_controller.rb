@@ -82,18 +82,17 @@ class GamesController < ApplicationController
     valor = params['game_id']
     if Purchase.exists?(user_id: current_user.id, game_id: valor)
       Purchase.where(user_id: current_user.id, game_id: valor).destroy_all
+      answer = {"status" => "removed"}
     else
       @Purchase = Purchase.new
       @Purchase.user = current_user
       @Purchase.game = Game.find(valor)
       @Purchase.save
+      answer = {"status" => "created"}
     end
-    #course = Course.find(valor)
-    #likes = course.people.count
-    #answer = {"create" => "true"}
-    #respond_to do |format|
-    #  format.json { render json: rez }  # respond with the created JSON object
-    #end
+    respond_to do |format|
+      format.json { render json: answer }  # respond with the created JSON object
+    end
   end
 
   private

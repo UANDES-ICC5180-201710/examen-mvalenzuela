@@ -36,9 +36,8 @@ function purchaseEvent(e) {
           },
           datatype: 'json',
           success: function(json){
-            likes = json["likes"]
-            console.log("the value of x is:", json["hola"]);
-            target.innerHTML = likes;
+            answer = json["answer"]
+            console.log("la respuesta desde el servidor es:", answer)
           }
       })
 }
