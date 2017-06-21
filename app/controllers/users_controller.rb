@@ -7,9 +7,20 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def toggle_staff
+    user = User.find(params[:user_id])
+    if user.is_staff == true
+      user.is_staff = false
+    else
+      user.is_staff = true
+    end
+    user.save
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show
+    @is_user_staff = current_user.is_staff
   end
 
   # GET /users/new
@@ -25,7 +36,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }

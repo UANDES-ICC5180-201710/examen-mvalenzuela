@@ -9,6 +9,38 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div "nav navbar-nav navbar-left">
+          <form class="navbar-form navbar-left" action="<%= games_path %>">
+            <div class="form-group">
+              <input type="text" class="form-control" name="title" placeholder="Search" value="<%= params[:title] %>">
+            </div>
+            <button type="submit" class="btn btn-info active">Submit</button>
+          </form>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+          <div>
+            <%= link_to content_tag("span", " Edit profile", :class => 'glyphicon glyphicon-edit'), edit_user_registration_path, :class => 'navbar-link' %> |
+            <%= link_to content_tag("span", " Log out", :class => 'glyphicon glyphicon-log-out'), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+          </div>
+          <div>
+            Logged in as <strong><%= current_user.email %></strong>.
+          </div>
+          <% else %>
+            <%= link_to content_tag("span", " Sign up", :class => 'glyphicon glyphicon-user'), new_user_registration_path, :class => 'navbar-link' %> |
+            <%= link_to content_tag("span", " Login", :class => 'glyphicon glyphicon-log-in'), new_user_session_path, :class => 'navbar-link'  %>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>

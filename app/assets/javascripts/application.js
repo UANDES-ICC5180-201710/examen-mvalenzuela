@@ -13,4 +13,32 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
+
+
+function purchaseEvent(e) {
+  var target = e.target;
+  var value = target.value;
+  if ( target.classList.contains('btn-success') ){
+    target.classList.remove('btn-success');
+  }
+
+  else{
+    target.classList.add('btn-success');
+  }
+  var result
+  $.ajax({
+          type: "POST",
+          url: "ajaxFunction",
+          data: {
+          "game_id" : value
+          },
+          datatype: 'json',
+          success: function(json){
+            likes = json["likes"]
+            console.log("the value of x is:", json["hola"]);
+            target.innerHTML = likes;
+          }
+      })
+}
